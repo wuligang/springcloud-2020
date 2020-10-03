@@ -1,8 +1,8 @@
 package com.hisoft.controller;
 
+import com.hisoft.pojo.Customer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: springcloud
@@ -17,5 +17,20 @@ public class SearchController {
     @GetMapping("/search")
     public String search(){
         return "search"+port;
+    }
+
+    @GetMapping("/search/{id}")
+    public Customer findById(@PathVariable Integer id){
+        return new Customer(id,"张三",22);
+    }
+
+    @GetMapping("/getCustomer")
+    public Customer getCustomer(@RequestParam Integer id,@RequestParam String name){
+        return new Customer(id,name,22);
+    }
+
+    @PostMapping("/save")        //会自动转为post请求   405
+    public Customer save(@RequestBody Customer customer){
+        return customer;
     }
 }
