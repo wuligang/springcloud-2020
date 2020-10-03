@@ -9,3 +9,9 @@ eureka:
 spring:
   application:
     name: CUSTOMER
+#指定具体服务的负载均衡策略
+SEARCH:    #编写服务名称
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+
+
