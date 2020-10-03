@@ -14,23 +14,25 @@ import org.springframework.web.bind.annotation.*;
 public class SearchController {
     @Value("${server.port}")
     private String port;
+
     @GetMapping("/search")
-    public String search(){
-        return "search"+port;
+    public String search() {
+        int a = 10 / 0;//测试fallback
+        return "search" + port;
     }
 
     @GetMapping("/search/{id}")
-    public Customer findById(@PathVariable Integer id){
-        return new Customer(id,"张三",22);
+    public Customer findById(@PathVariable Integer id) {
+        return new Customer(id, "张三", 22);
     }
 
     @GetMapping("/getCustomer")
-    public Customer getCustomer(@RequestParam Integer id,@RequestParam String name){
-        return new Customer(id,name,22);
+    public Customer getCustomer(@RequestParam Integer id, @RequestParam String name) {
+        return new Customer(id, name, 22);
     }
 
     @PostMapping("/save")        //会自动转为post请求   405
-    public Customer save(@RequestBody Customer customer){
+    public Customer save(@RequestBody Customer customer) {
         return customer;
     }
 }

@@ -15,3 +15,6 @@ SEARCH:    #编写服务名称
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
 
 
+feign:
+  hystrix:
+    enabled: true
