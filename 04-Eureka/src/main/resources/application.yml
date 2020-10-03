@@ -19,3 +19,5 @@ spring:
     user:
       name: root
       password: root
+  application:
+    name: EUREKA-04
