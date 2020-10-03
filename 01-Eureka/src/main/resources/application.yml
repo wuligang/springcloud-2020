@@ -4,12 +4,16 @@ server:
 eureka:
   instance:
     hostname: localhost  #服务主机
+    lease-renewal-interval-in-seconds: 30   #心跳的间隔
+    lease-expiration-duration-in-seconds: 90    #多久没发送，就认为你宕机了
   client:
     #当前的Eureka服务是单机版的
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: true   #开启自我保护机制
 
 spring:
   security:
