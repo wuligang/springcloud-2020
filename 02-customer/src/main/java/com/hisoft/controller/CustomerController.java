@@ -5,6 +5,7 @@ import com.hisoft.pojo.Customer;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +28,18 @@ public class CustomerController {
 
     @GetMapping("/customer")
     public String customer() {
+        System.out.println(Thread.currentThread().getName());
         return searchClient.search();
     }
 
     @GetMapping("/search/{id}")
-    @HystrixCommand(fallbackMethod = "findByIdFallBack")
+    @HystrixCommand(fallbackMethod = "findByIdFallBack",commandProperties = {
+            @HystrixProperty(name = "execution.isolation.strategy",value = "SEMAPHORE"),
+            @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests",value = "10")
+    })
     public Customer findById(@PathVariable Integer id) {
-        int a = 1 / 0;
+        System.out.println(Thread.currentThread().getName());
+//        int a = 1 / 0;
         return searchClient.findById(id);
     }
 
