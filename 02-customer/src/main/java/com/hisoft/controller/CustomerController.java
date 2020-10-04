@@ -4,6 +4,7 @@ import com.hisoft.client.SearchClient;
 import com.hisoft.pojo.Customer;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +31,15 @@ public class CustomerController {
     }
 
     @GetMapping("/search/{id}")
+    @HystrixCommand(fallbackMethod = "findByIdFallBack")
     public Customer findById(@PathVariable Integer id) {
+        int a = 1 / 0;
         return searchClient.findById(id);
+    }
+
+    //findById 的降级方法，方法描述要一模一样
+    public Customer findByIdFallBack(@PathVariable Integer id) {
+        return new Customer(-1,"",0);
     }
 
     @GetMapping("/getCustomer")
