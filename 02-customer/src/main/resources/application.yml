@@ -18,3 +18,7 @@ SEARCH:    #编写服务名称
 feign:
   hystrix:
     enabled: true
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "localhost"

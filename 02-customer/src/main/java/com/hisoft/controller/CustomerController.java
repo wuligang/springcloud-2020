@@ -33,13 +33,10 @@ public class CustomerController {
     }
 
     @GetMapping("/search/{id}")
-    @HystrixCommand(fallbackMethod = "findByIdFallBack",commandProperties = {
-            @HystrixProperty(name = "execution.isolation.strategy",value = "SEMAPHORE"),
-            @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests",value = "10")
-    })
+    @HystrixCommand(fallbackMethod = "findByIdFallBack")
     public Customer findById(@PathVariable Integer id) {
         System.out.println(Thread.currentThread().getName());
-//        int a = 1 / 0;
+        int a = 1 / 0;
         return searchClient.findById(id);
     }
 
